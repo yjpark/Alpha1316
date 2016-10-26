@@ -1,4 +1,4 @@
-# A1316_FUNCTIONS() #
+# A1316_GET_COLOR() #
 ```
 fixed4 a1316_get_color(sampler2D tex, float2 uv)
 {
@@ -34,8 +34,14 @@ fixed4 a1316_get_color(sampler2D tex, float2 uv)
     c.a = index == 0 ? alpha.r : (index == 1 ? alpha.g : alpha.b);
     return c;
 }
+```
 
-fixed4 a1316_get_color_with_fix(sampler2D tex, float2 uv)
+# A1316_GET_COLOR_SHARP() #
+```
+//SILP:A1316_GET_COLOR()
+
+fixed4 a1316_get_color_sharp(sampler2D tex, float2 uv)
+{
     fixed4 c = a1316_get_color(tex, uv);
     half a = c.a;
 

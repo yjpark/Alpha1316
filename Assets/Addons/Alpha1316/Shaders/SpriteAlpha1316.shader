@@ -65,7 +65,7 @@ Shader "Alpha1316/Sprite"
 			sampler2D _MainTex;
 			sampler2D _AlphaTex;
 
-            //SILP: A1316_FUNCTIONS()
+            //SILP: A1316_GET_COLOR()
             fixed4 a1316_get_color(sampler2D tex, float2 uv)                                        //__SILP__
             {                                                                                       //__SILP__
                 float2 color_coord = uv * 0.8125;                                                   //__SILP__
@@ -100,35 +100,11 @@ Shader "Alpha1316/Sprite"
                 c.a = index == 0 ? alpha.r : (index == 1 ? alpha.g : alpha.b);                      //__SILP__
                 return c;                                                                           //__SILP__
             }                                                                                       //__SILP__
-                                                                                                    //__SILP__
-            fixed4 a1316_get_color_with_fix(sampler2D tex, float2 uv)                               //__SILP__
-                fixed4 c = a1316_get_color(tex, uv);                                                //__SILP__
-                half a = c.a;                                                                       //__SILP__
-                                                                                                    //__SILP__
-                //ETC1 Compression will bring some messy pixels in complex                          //__SILP__
-                //images, this can solve that in many cases.                                        //__SILP__
-                //You may want to create a copy and tweak the parameter here to                     //__SILP__
-                //get better result.                                                                //__SILP__
-                if (a < 0.5) {                                                                      //__SILP__
-                    a = a * a;                                                                      //__SILP__
-                    if (a < 0.15) {                                                                 //__SILP__
-                        a = 0;                                                                      //__SILP__
-                    }                                                                               //__SILP__
-                } else {                                                                            //__SILP__
-                    a = 1 - a;                                                                      //__SILP__
-                    a = 1 - a * a;                                                                  //__SILP__
-                    if (a > 0.85) {                                                                 //__SILP__
-                        a = 1;                                                                      //__SILP__
-                    }                                                                               //__SILP__
-                }                                                                                   //__SILP__
-                c.a = a;                                                                            //__SILP__
-                return c;                                                                           //__SILP__
-            }                                                                                       //__SILP__
 
 			fixed4 SampleSpriteTexture (float2 uv)
 			{
 				//fixed4 color = tex2D (_MainTex, uv);
-				fixed4 color = a1316_get_color_with_fix (_MainTex, uv);
+				fixed4 color = a1316_get_color (_MainTex, uv);
 
 //#if ETC1_EXTERNAL_ALPHA
 //				// get the color from an external texture (usecase: Alpha support for ETC1 on android)
