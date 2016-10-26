@@ -1,4 +1,4 @@
-# A1316_GET_COLOR() #
+# A1316_FUNCTIONS() #
 ```
 fixed4 a1316_get_color(sampler2D tex, float2 uv)
 {
@@ -31,7 +31,14 @@ fixed4 a1316_get_color(sampler2D tex, float2 uv)
 
     fixed4 alpha = tex2D(tex, alpha_coord);
 
-    half a = index == 0 ? alpha.r : (index == 1 ? alpha.g : alpha.b);
+    c.a = index == 0 ? alpha.r : (index == 1 ? alpha.g : alpha.b);
+    return c;
+}
+
+fixed4 a1316_get_color_with_fix(sampler2D tex, float2 uv)
+    fixed4 c = a1316_get_color(tex, uv);
+    half a = c.a;
+
     //ETC1 Compression will bring some messy pixels in complex
     //images, this can solve that in many cases.
     //You may want to create a copy and tweak the parameter here to
@@ -48,10 +55,7 @@ fixed4 a1316_get_color(sampler2D tex, float2 uv)
             a = 1;
         }
     }
-
     c.a = a;
-    c.rgb *= a;
-
     return c;
 }
 ```
