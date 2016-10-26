@@ -1,4 +1,4 @@
-Shader "Sprites/Etc1WithAlpha"
+Shader "Sprites/Alpha 1316"
 {
     Properties
     {
@@ -79,6 +79,7 @@ Shader "Sprites/Etc1WithAlpha"
                 alpha_coord.x = 0.8125 + 0.1875 * clamp(0.5 + (texX - center) * 13.0 / 3.0, 0, 1);
                 alpha_coord.y = color_coord.y;
 
+                int index = segment;
                 if (segment >= 3) {
                     // Note: on the android devices, if using
                     //`int index = segment % 3;`, the index might have wrong
